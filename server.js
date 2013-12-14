@@ -15,6 +15,8 @@ var zlib = require('zlib');
 var path = require('path');
 var url = require('url');
 var querystring = require('querystring');
+var php = require("./node-php");
+
 process.on("uncaughtException", function(e) {
 	console.log(e);
 });
@@ -40,6 +42,13 @@ function reqHandlerSSL(req, res){
 	var ssl = true;
 	eval(get("handler.js"));
 }
+
+var agent = new php.Agent(4, "");
+
+agent.on("error", function(err) {
+	console.log("client.error");
+	console.log(err);
+});
 
 eval(get("config.js"));
 eval(get("vhosts.js"));

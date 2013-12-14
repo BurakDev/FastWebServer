@@ -66,7 +66,11 @@ fs.exists(filePath, function(exists){
 					if(fileext == "php"){
 						headers['Content-Type'] = mimetypes['html'];
 						var php = true;
-						
+						agent.request(req, res, function(err, response) {
+							if(err) console.log(err);
+							console.log(response);
+						});
+						/*
 						var tmp = "tmp/"+Math.floor(Math.random()* 10000000000000000)+"fws"+Math.floor(Math.random()* 10000000000000000)+".tmp";
 						
 						exec('"C://xampp/php/php.exe" -r "unset($argv,$argc);require_once(\''+filePath+'\');"', function(error, stdout, stderr){
@@ -85,7 +89,7 @@ fs.exists(filePath, function(exists){
 								res.writeHead(200, headers);
 								raw.pipe(res);
 							}
-						});
+						});*/
 
 					}else if(mimetypes[fileext]){
 						headers['Content-Type'] = mimetypes[fileext];
