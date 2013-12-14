@@ -69,7 +69,7 @@ fs.exists(filePath, function(exists){
 						
 						var tmp = "tmp/"+Math.floor(Math.random()* 10000000000000000)+"fws"+Math.floor(Math.random()* 10000000000000000)+".tmp";
 						
-						exec('"php/php.exe" -r "$_GET[\'test\'] = \'lol\';unset($argv,$argc);require_once(\'www/test.php\');"', function(error, stdout, stderr){
+						exec('"C://xampp/php/php.exe" -r "unset($argv,$argc);require_once(\''+filePath+'\');"', function(error, stdout, stderr){
 							put(tmp, stdout);
 							var raw = fs.createReadStream(tmp);
 							fs.unlinkSync(tmp);
