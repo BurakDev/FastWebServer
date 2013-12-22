@@ -161,7 +161,7 @@ function client(options) {
 	}
 		
 	connection.parser.onRecord = function(record) {
-		//console.log(record);
+		// console.log(record);
 		var recordId = parseInt(record.header.recordId);
 		var request = requests[recordId];
 		switch(record.header.type) {
@@ -194,6 +194,7 @@ function client(options) {
 	}
 
 	connection.ondata = function (buffer, start, end) {
+		// console.log(buffer.toString());
 		connection.parser.execute(buffer, start, end);
 	};
 	
@@ -232,6 +233,7 @@ function client(options) {
 		var req = request.req;
 		req.resume();
 		var params = connection.params.slice(0);
+		// console.log(params);
 		params.push(["REMOTE_ADDR", req.connection.remoteAddress]);
 		params.push(["REMOTE_PORT", req.connection.remotePort.toString()]);
 		req.url = url.parse(req.url);

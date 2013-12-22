@@ -63,12 +63,33 @@ fs.exists(filePath, function(exists){
 				filesplit = urlreal.split(".");
 				if(filesplit.length > 1){
 					fileext = filesplit[(filesplit.length-1)];
-					if(fileext == "php"){
+					if(fileext == "js"){
+						var cgi = true;
+						eval(content.toString('binary'));
+						result = new Buffer(result, "binary");
+						var raw = new streamBuffers.ReadableStreamBuffer({
+						  frequency: 10,       // in milliseconds.
+						  chunkSize: 2048     // in bytes.
+						});
+						raw.put(result);
+						if(client.acceptencoding.match(/\bdeflate\b/)){
+							headers['Content-Encoding'] = 'deflate';
+							res.writeHead(200, headers);
+							raw.pipe(zlib.createDeflate()).pipe(res);
+						}else if(client.acceptencoding.match(/\bgzip\b/)){
+							headers['Content-Encoding'] = 'gzip';
+							res.writeHead(200, headers);
+							raw.pipe(zlib.createGzip()).pipe(res);
+						}else{
+							res.writeHead(200, headers);
+							raw.pipe(res);
+						}
+					}else if(fileext == "php"){
 						headers['Content-Type'] = mimetypes['html'];
-						var php = true;
+						var cgi = true;
 						agent.request(req, res, function(err, response) {
 							if(err) console.log(err);
-							console.log(response);
+							// console.log(response);
 						});
 						/*
 						var tmp = "tmp/"+Math.floor(Math.random()* 10000000000000000)+"fws"+Math.floor(Math.random()* 10000000000000000)+".tmp";
@@ -95,9 +116,9 @@ fs.exists(filePath, function(exists){
 						headers['Content-Type'] = mimetypes[fileext];
 					}
 				}
-				if(!php){
+				if(!cgi){
 					var raw = fs.createReadStream(filePath);
-
+					// console.log(raw);
 					if(client.acceptencoding.match(/\bdeflate\b/)){
 						headers['Content-Encoding'] = 'deflate';
 						res.writeHead(200, headers);

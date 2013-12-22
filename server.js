@@ -15,7 +15,9 @@ var zlib = require('zlib');
 var path = require('path');
 var url = require('url');
 var querystring = require('querystring');
-var php = require("./node-php");
+var php = require('./node-php');
+var Stream = require('stream');
+var streamBuffers = require("stream-buffers");
 
 process.on("uncaughtException", function(e) {
 	console.log(e);
