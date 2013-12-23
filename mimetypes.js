@@ -65,7 +65,7 @@ var mimetypes = {
 	"ins": "application/x-internet-signup",
 	"isp": "application/x-internet-signup",
 	"iii": "application/x-iphone",
-	"js": "application/x-javascript",
+	"js": "application/javascript",
 	"latex": "application/x-latex",
 	"mdb": "application/x-msaccess",
 	"crd": "application/x-mscardfile",
