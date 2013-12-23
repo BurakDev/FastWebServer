@@ -1,7 +1,7 @@
 /*************************************************
  * FastWebServer by Burak (burakadama@gmail.com) *
  *************************************************/
-
+req.url = req.url.replace("../", "");
 var client = {
 	remote_ip: req.connection.remoteAddress,
 	host: req.headers.host,
@@ -39,11 +39,11 @@ var headers = {"X-Powered-By": "FastWebServer ALPHA"}
 var urlreal = url.parse(req.url).pathname;
 
 if(urlreal == '/'){
-	urlreal = '/index.html';
+	urlreal = '/index.nodejs';
 }else{
 	urlsplit = urlreal.split("");
 	if(urlsplit[(urlsplit.length-1)] == '/'){
-		urlreal = urlreal+'index.html';
+		urlreal = urlreal+'index.nodejs';
 	}
 }
 
@@ -63,7 +63,8 @@ fs.exists(filePath, function(exists){
 				filesplit = urlreal.split(".");
 				if(filesplit.length > 1){
 					fileext = filesplit[(filesplit.length-1)];
-					if(fileext == "js"){
+					if(fileext == "nodejs"){
+						headers['Content-Type'] = mimetypes['html'];
 						var cgi = true;
 						eval(content.toString('binary'));
 						result = new Buffer(result, "binary");

@@ -1,0 +1,3 @@
+process.chdir('./www/');
+var result = "Hello World";
+process.chdir('../');
